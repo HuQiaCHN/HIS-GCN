@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     # If you want to read the graph data in .npz format,
     # please replace the above code with the following code:
-    # filename = "dataset_name"  # Modify this parameter to test the graph you want to test
+    # filename = "dataset_name"  # Modify this parameter to test the dataset you want to test
     # G_adj = sp.load_npz(f'./datasets/{filename}/adj_full.npz').astype(bool)
 
     G_adj = convert_to_undirected(G_adj)
