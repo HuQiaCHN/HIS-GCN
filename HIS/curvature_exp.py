@@ -45,7 +45,7 @@ if __name__ == '__main__':
     sampler = FFSampler(G_adj, None, 0.1, core_rate=1)
     sampler.evaluate_network()
 
-    sub_graph_datas = sampler.sample_process(50)
+    sub_graph_datas = sampler.sample_process(1000)
     per_nodes = sampler.per_nodes
 
     subgraphs = []
