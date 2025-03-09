@@ -65,7 +65,7 @@ def train(train_phases, model, minibatch, minibatch_eval, model_eval, eval_val_e
     time_calc_f1, time_train = 0, 0
     dir_saver = '{}/pytorch_models'.format(args_global.dir_log)
     path_saver = '{}/pytorch_models/saved_model_{}.pkl'.format(args_global.dir_log, timestamp)
-    writer = SummaryWriter(log_dir(args_global.train_config, args_global.data_prefix, timestamp))
+
 
     for ip, phase in enumerate(train_phases):
         printf('START PHASE {:4d}'.format(ip),style='underline')
@@ -111,14 +111,6 @@ def train(train_phases, model, minibatch, minibatch_eval, model_eval, eval_val_e
                         os.makedirs(dir_saver)
                     printf('  Saving model ...', style='yellow')
                     torch.save(model.state_dict(), path_saver)
-                if args_global.tensorboard:
-                    writer.add_scalar('val_f1_micro', f1mic_val, e)
-                    writer.add_scalar('val_f1_macro', f1mac_val, e)
-                    writer.add_scalar('train_f1_micro', f_mean(l_f1mic_tr), e)
-                    writer.add_scalar('train_f1_macro', f_mean(l_f1mac_tr), e)
-                    writer.add_scalar('time_per_epoch', time_train_ep, e)
-                    writer.add_scalar('size_subgraph', f_mean(l_size_subg), e)
-
             t3 = time.time()
         epoch_ph_start = int(phase['end'])
 
@@ -139,7 +131,7 @@ def train(train_phases, model, minibatch, minibatch_eval, model_eval, eval_val_e
         ep_best, f1mic_val, f1mac_val), style='red')
     printf("Full test stats: \n  F1_Micro = {:.4f}\tF1_Macro = {:.4f}".format(
         f1mic_test, f1mac_test), style='red')
-    printf("Total training time: {:6.2f} sec".format(time_train * ep_best /epoch_ph_start), style='red')
+    printf("Total training time: {:6.2f} sec".format(time_train), style='red')
     return f1mic_test, f1mic_val
 
 if __name__ == '__main__':

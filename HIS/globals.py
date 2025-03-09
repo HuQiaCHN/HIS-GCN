@@ -17,7 +17,6 @@ parser.add_argument("--eval_train_every", default=15, type=int, help="How often 
 parser.add_argument("--train_config", required=True, type=str, help="path to the configuration of training (*.yml)")
 parser.add_argument("--dualGPU", default=False, action="store_true", help="whether to distribute the model to two GPUs")
 parser.add_argument("--cpu_eval", default=False, action="store_true", help="whether to use CPU to do evaluation")
-parser.add_argument("--tensorboard", default=False, action="store_true", help="to save data to tensorboard or not")
 parser.add_argument("--saved_model_path", default="", type=str, help="path to pretrained model file")
 args_global = parser.parse_args()
 
