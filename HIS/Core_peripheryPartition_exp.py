@@ -1,0 +1,47 @@
+from HIS.HISsampler import *
+import networkx as nx
+
+def convert_to_undirected(csr_adj):
+    csr_adj = csr_adj.maximum(csr_adj.T)
+    csr_adj.setdiag(0)
+    csr_adj.eliminate_zeros()
+    csr_adj.data.fill(1)
+    return csr_adj
+
+
+if __name__ == '__main__':
+    G = nx.Graph()
+
+    with open("./HIS/data/facebook_combined.txt", 'r') as f:
+        for line in f:
+            node1, node2 = map(int, line.strip().split(' '))
+            G.add_edge(node1, node2)
+    G_adj = nx.to_scipy_sparse_array(G)
+
+    G_adj = convert_to_undirected(G_adj)
+    degrees = np.array(G_adj.sum(1)).flatten()
+    t0 = time.time()
+    V_org = np.arange(G_adj.shape[0])
+    max_edge_count = 0
+    edge_count_dict = defaultdict(int)
+    row, col = G_adj.nonzero()
+    edges = list(zip(row, col))
+    d_th = 0
+
+    # You can modify edge_rate to speed up the decomposition process. When there are enough edges in
+    # the original graph. Modifying edge_rate will hardly affect the decomposition effect.
+    # Every ten times decrease in edge_rate will increase the speed by ten times
+    edge_rate = 0.1
+
+    edges_sampled = random.sample(edges, int(len(edges) * edge_rate))
+    for u, w in edges_sampled:
+        u_degree = degrees[u]
+        w_degree = degrees[w]
+        for d in range(w_degree, u_degree):
+            edge_count_dict[d] += 1
+            if edge_count_dict[d] > max_edge_count:
+                max_edge_count = edge_count_dict[d]
+                d_th = d
+    t1 = time.time()
+    print(f"degree threshold: {d_th}")
+    print(f"process time: {t1-t0:6.2f} sec")
