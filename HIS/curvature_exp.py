@@ -14,7 +14,7 @@ def convert_to_undirected(csr_adj):
 
 if __name__ == '__main__':
     G = nx.Graph()
-    filename = "facebook_combined"
+    filename = "facebook_combined"    # Modify this parameter to test the .txt file of graph you want to test
     with open(f"./HIS/data/{filename}.txt", 'r') as f:
         for line in f:
             node1, node2 = map(int, line.strip().split())
