@@ -1,5 +1,6 @@
 from HIS.HISsampler import *
 import networkx as nx
+import scipy.sparse as sp
 
 def convert_to_undirected(csr_adj):
     csr_adj = csr_adj.maximum(csr_adj.T)
@@ -11,12 +12,17 @@ def convert_to_undirected(csr_adj):
 
 if __name__ == '__main__':
     G = nx.Graph()
-
-    with open("./HIS/data/facebook_combined.txt", 'r') as f:
+    filename = "facebook_combined"  # Modify this parameter to test the graph you want to test
+    with open(f"./HIS/data/{filename}.txt", 'r') as f:
         for line in f:
-            node1, node2 = map(int, line.strip().split(' '))
+            node1, node2 = map(int, line.strip().split())
             G.add_edge(node1, node2)
     G_adj = nx.to_scipy_sparse_array(G)
+
+    # If you want to read the training graph data in .npz format,
+    # please replace the above code with the following code:
+    # filename = "dataset_name"  # Modify this parameter to test the graph you want to test
+    # G_adj = sp.load_npz(f'./datasets/{filename}/adj_train.npz').astype(bool)
 
     G_adj = convert_to_undirected(G_adj)
     degrees = np.array(G_adj.sum(1)).flatten()
@@ -34,6 +40,7 @@ if __name__ == '__main__':
     edge_rate = 0.1
 
     edges_sampled = random.sample(edges, int(len(edges) * edge_rate))
+    print(f"process {filename} ...")
     for u, w in edges_sampled:
         u_degree = degrees[u]
         w_degree = degrees[w]

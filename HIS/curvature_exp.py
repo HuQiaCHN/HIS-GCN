@@ -1,6 +1,7 @@
 from HIS.HISsampler import *
 import networkx as nx
 from GraphRicciCurvature.OllivierRicci import OllivierRicci
+import scipy.sparse as sp
 
 
 def convert_to_undirected(csr_adj):
@@ -13,13 +14,17 @@ def convert_to_undirected(csr_adj):
 
 if __name__ == '__main__':
     G = nx.Graph()
-
-    with open("./HIS/data/facebook_combined.txt", 'r') as f:
+    filename = "facebook_combined"
+    with open(f"./HIS/data/{filename}.txt", 'r') as f:
         for line in f:
-
-            node1, node2 = map(int, line.strip().split(' '))
+            node1, node2 = map(int, line.strip().split())
             G.add_edge(node1, node2)
     G_adj = nx.to_scipy_sparse_array(G)
+
+    # If you want to read the graph data in .npz format,
+    # please replace the above code with the following code:
+    # filename = "dataset_name"  # Modify this parameter to test the graph you want to test
+    # G_adj = sp.load_npz(f'./datasets/{filename}/adj_full.npz').astype(bool)
 
     G_adj = convert_to_undirected(G_adj)
 
@@ -30,6 +35,7 @@ if __name__ == '__main__':
 
     G = nx.from_scipy_sparse_array(G_adj)
 
+    print("process {filename} ...")
     orc = OllivierRicci(G, alpha=0., verbose="DEBUG")
     edge_curvatures = orc.compute_ricci_curvature_edges(list(G.edges()))
     edge_curvature_values = list(edge_curvatures.values())
