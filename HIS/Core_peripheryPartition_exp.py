@@ -11,19 +11,19 @@ def convert_to_undirected(csr_adj):
 
 
 if __name__ == '__main__':
-    G = nx.Graph()
-    filename = "facebook_combined"  # Modify this parameter to test the .txt file of graph you want to test
-    with open(f"./HIS/data/{filename}.txt", 'r') as f:
-        for line in f:
-            node1, node2 = map(int, line.strip().split())
-            G.add_edge(node1, node2)
-    G_adj = nx.to_scipy_sparse_array(G)
+    filename = "ppi-large"  # Modify this parameter to test the dataset you want to test
+    G_adj = sp.load_npz(f'./datasets/{filename}/adj_train.npz').astype(bool)
 
-    # If you want to read the training graph data in .npz format,
+    # If you want to read the training graph data in .txt format,
     # please replace the above code with the following code:
-    # filename = "dataset_name"  # Modify this parameter to test the dataset you want to test
-    # G_adj = sp.load_npz(f'./datasets/{filename}/adj_train.npz').astype(bool)
-
+    # G = nx.Graph()
+    # filename = "filename"  # Modify this parameter to test the .txt file of graph you want to test
+    # with open(f"./HIS/data/{filename}.txt", 'r') as f:
+    #     for line in f:
+    #         node1, node2 = map(int, line.strip().split())
+    #         G.add_edge(node1, node2)
+    # G_adj = nx.to_scipy_sparse_array(G)
+    
     G_adj = convert_to_undirected(G_adj)
     degrees = np.array(G_adj.sum(1)).flatten()
     t0 = time.time()
