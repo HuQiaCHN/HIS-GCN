@@ -108,9 +108,9 @@ python -m HIS.Core_peripheryPartition_exp
 Sample output (ego-facebook):
 
 ```
-process facebook_combined ...
-degree threshold: 124
-process time:   0.09 sec
+process ppi-large ...
+degree threshold: 57
+process time:   0.03 sec
 ```
 
 ## License
