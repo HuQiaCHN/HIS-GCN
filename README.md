@@ -92,7 +92,7 @@ python -m HIS.curvature_exp
 
 Please note that the curvature experiment only supports running on Linux
 
-Sample output (ego-facebook):
+Output (ego-facebook):
 
 ```
 OllivierRicci curvature: 0.3244994421467344
@@ -105,7 +105,7 @@ Core-periphery partition experiments:
 ```
 python -m HIS.Core_peripheryPartition_exp
 ```
-Sample output (ego-facebook):
+Output (ppi-large):
 
 ```
 process ppi-large ...
