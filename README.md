@@ -96,7 +96,7 @@ Output (ego-facebook):
 
 ```
 OllivierRicci curvature: 0.3244994421467344
-Sampling: 100%|██████████████████████████████| 1000/1000 [00:00<00:00, 345.99it/s]
+Progress: 100%|██████████████████████████████| 1000/1000 [00:00<00:00, 345.99it/s]
 subgraph OllivierRicci curvature：0.4061342377303167
 ```
 
