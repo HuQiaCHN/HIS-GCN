@@ -124,7 +124,7 @@ class RWSampler:
         sub_graphs = []
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = []
-            with tqdm(total=per_num, desc="Sampling") as pbar:
+            with tqdm(total=per_num, desc="Progress") as pbar:
                 for i in range(per_num):
                     futures.append(executor.submit(self.sampling))
 
@@ -253,7 +253,7 @@ class FFSampler:
         sub_graphs = []
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = []
-            with tqdm(total=per_num, desc="Sampling") as pbar:
+            with tqdm(total=per_num, desc="Progress") as pbar:
                 for i in range(per_num):
                     futures.append(executor.submit(self.sampling))
 
