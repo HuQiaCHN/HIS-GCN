@@ -17,7 +17,7 @@ class RWSampler:
         self.walk_length = walk_length
         self.adj_train = adj_train
         self.degrees = np.array(self.adj_train.sum(1)).flatten()
-        self.feat_full = feat_full
+        self.feat_full = feat_full if feat_full is not None else np.ones(adj_train.shape[0])
         self.N_cc = {}
         self.N_pc = {}
         self.N_pp = {}
@@ -141,7 +141,7 @@ class FFSampler:
         self.adj_train = adj_train
         self.degrees = np.array(self.adj_train.sum(1)).flatten()
         self.core_rate = core_rate
-        self.feat_full = feat_full
+        self.feat_full = feat_full if feat_full is not None else np.ones(adj_train.shape[0])
         self.N_cc = {}
         self.N_pc = {}
         self.N_pp = {}

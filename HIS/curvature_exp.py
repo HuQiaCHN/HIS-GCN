@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
     G = nx.from_scipy_sparse_array(G_adj)
 
-    print("process {filename} ...")
+    print(f"process {filename} ...")
     orc = OllivierRicci(G, alpha=0., verbose="DEBUG")
     edge_curvatures = orc.compute_ricci_curvature_edges(list(G.edges()))
     edge_curvature_values = list(edge_curvatures.values())
