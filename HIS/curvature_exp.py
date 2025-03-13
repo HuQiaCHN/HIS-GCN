@@ -11,20 +11,27 @@ def convert_to_undirected(csr_adj):
     csr_adj.data.fill(1)
     return csr_adj
 
+def read_npz_format(filename):
+    return sp.load_npz(f'./datasets/{filename}/adj_full.npz').astype(bool)
 
-if __name__ == '__main__':
+
+def read_txt_format(filename):
     G = nx.Graph()
-    filename = "facebook_combined"    # Modify this parameter to test the .txt file of graph you want to test
     with open(f"./HIS/data/{filename}.txt", 'r') as f:
         for line in f:
             node1, node2 = map(int, line.strip().split())
             G.add_edge(node1, node2)
-    G_adj = nx.to_scipy_sparse_array(G)
+    return nx.to_scipy_sparse_array(G)
+
+
+if __name__ == '__main__':
+    filename = "facebook_combined"    # Modify this parameter to test the .txt file of graph you want to test
+
+    G_adj = read_txt_format(filename)
 
     # If you want to read the graph data in .npz format,
     # please replace the above code with the following code:
-    # filename = "dataset_name"  # Modify this parameter to test the dataset you want to test
-    # G_adj = sp.load_npz(f'./datasets/{filename}/adj_full.npz').astype(bool)
+    # G_adj = read_npz_format(filename)
 
     G_adj = convert_to_undirected(G_adj)
 

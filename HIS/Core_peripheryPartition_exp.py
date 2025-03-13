@@ -9,20 +9,26 @@ def convert_to_undirected(csr_adj):
     csr_adj.data.fill(1)
     return csr_adj
 
+def read_npz_format(filename):
+    return sp.load_npz(f'./datasets/{filename}/adj_train.npz').astype(bool)
+
+
+def read_txt_format(filename):
+    G = nx.Graph()
+    with open(f"./HIS/data/{filename}.txt", 'r') as f:
+        for line in f:
+            node1, node2 = map(int, line.strip().split())
+            G.add_edge(node1, node2)
+    return nx.to_scipy_sparse_array(G)
+
 
 if __name__ == '__main__':
     filename = "ppi-large"  # Modify this parameter to test the dataset you want to test
-    G_adj = sp.load_npz(f'./datasets/{filename}/adj_train.npz').astype(bool)
+    G_adj = read_npz_format(filename)
 
     # If you want to read the training graph data in .txt format,
     # please replace the above code with the following code:
-    # G = nx.Graph()
-    # filename = "filename"  # Modify this parameter to test the .txt file of graph you want to test
-    # with open(f"./HIS/data/{filename}.txt", 'r') as f:
-    #     for line in f:
-    #         node1, node2 = map(int, line.strip().split())
-    #         G.add_edge(node1, node2)
-    # G_adj = nx.to_scipy_sparse_array(G)
+    # G_adj = read_txt_format(filename)
     
     G_adj = convert_to_undirected(G_adj)
     degrees = np.array(G_adj.sum(1)).flatten()
