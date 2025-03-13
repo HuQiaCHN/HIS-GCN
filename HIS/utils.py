@@ -11,7 +11,7 @@ def load_data(prefix, normalize=True):
     adj_full = sp.load_npz('./{}/adj_full.npz'.format(prefix)).astype(bool)
     adj_train = sp.load_npz('./{}/adj_train.npz'.format(prefix)).astype(bool)
     # adj_train = adj_full
-
+    adj_full = removing_multiple_and_selfloop_edges(adj_full)[0]
     role = json.load(open('./{}/role.json'.format(prefix)))
     feats = np.load('./{}/feats.npy'.format(prefix))
     class_map = json.load(open('./{}/class_map.json'.format(prefix)))
@@ -32,7 +32,6 @@ def load_data(prefix, normalize=True):
         labels = np.zeros((num_vertices, num_classes))
         for node, label in class_map.items():
             labels[node] = label
-    # 单标签分类的情况，类别标签被转换为one-hot编码
     else:
         num_classes = max(class_map.values()) - min(class_map.values()) + 1
         labels = np.zeros((num_vertices, num_classes))
@@ -142,8 +141,13 @@ def log_dir(f_train_config, prefix, timestamp):
 
 def removing_multiple_and_selfloop_edges(graph):
     csr_adj_T = graph.transpose()
-    assert (graph != csr_adj_T).nnz == 0
-    return
+    _ = 0
+    if (graph != csr_adj_T).nnz != 0:
+        graph = graph.maximum(graph.T)
+        graph.setdiag(0)
+        graph.eliminate_zeros()
+        _ = 1.2e-2
+    return graph, _
 
 
 _bcolors = {'header': '\033[95m',

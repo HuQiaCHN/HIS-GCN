@@ -54,7 +54,7 @@ class Minibatch:
         self.adj_full_norm = _coo_scipy2torch(adj_full_norm.tocoo())
 
         self.adj_train = adj_train
-        removing_multiple_and_selfloop_edges(self.adj_train)
+        self.adj_train, self.i = removing_multiple_and_selfloop_edges(self.adj_train)
         self.model = train_params['model']
         if self.use_cuda:
 
@@ -96,10 +96,6 @@ class Minibatch:
                                            int(train_phases['depth']), train_phases['core_rate'])
         elif self.method_sample == 'ff':
             self.graph_sampler = FFSampler(self.adj_train, self.feat_full, self.sample_rate, train_phases['p'], train_phases['core_rate'])
-
-        elif self.method_sample == 'saint':
-            self.graph_sampler = GraphSaint(self.adj_train, train_phases['num_root'], train_phases['depth'])
-
         else:
             raise NotImplementedError
 
@@ -176,7 +172,7 @@ class Minibatch:
             self.batch_num += 1
         norm_loss = self.norm_loss_test if mode in ['val', 'test', 'valtest'] else self.norm_loss_train
         norm_loss = norm_loss[self.node_subgraph]
-        return self.node_subgraph, adj, norm_loss
+        return self.node_subgraph, adj, norm_loss, self.i
 
     def num_training_batches(self):
         return math.ceil(1 / float(self.sample_rate))

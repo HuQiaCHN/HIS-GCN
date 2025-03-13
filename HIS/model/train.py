@@ -4,7 +4,6 @@ from HIS.model.minibatch import Minibatch
 from HIS.utils import *
 from HIS.metric import *
 from HIS.model.inits import *
-from torch.utils.tensorboard import SummaryWriter
 import torch
 import time
 
@@ -15,7 +14,7 @@ def evaluate_full_batch(model, minibatch, mode='val'):
         When calculating the F1 score, we will mask the relevant root nodes
         (e.g., those belonging to the val / test sets).
     """
-    loss, preds, labels = model.eval_step(*minibatch.one_batch(mode=mode))
+    loss, preds, labels, _ = model.eval_step(*minibatch.one_batch(mode=mode))
     if mode == 'val':
         node_target = [minibatch.node_val]
     elif mode == 'test':
@@ -33,7 +32,7 @@ def evaluate_full_batch(model, minibatch, mode='val'):
     # loss is not very accurate in this case, since loss is also contributed by training nodes
     # on the other hand, for val / test, we mostly care about their accuracy only.
     # so the loss issue is not a problem.
-    return loss, f1mic, f1mac
+    return loss, f1mic, f1mac, _
 
 
 
@@ -101,7 +100,7 @@ def train(train_phases, model, minibatch, minibatch_eval, model_eval, eval_val_e
                     model_eval = model
 
 
-                loss_val, f1mic_val, f1mac_val = evaluate_full_batch(model_eval, minibatch_eval, mode='val')
+                loss_val, f1mic_val, f1mac_val,_ = evaluate_full_batch(model_eval, minibatch_eval, mode='val')
                 printf(' VALIDATION:     loss = {:.4f}\tmic = {:.4f}\tmac = {:.4f}'\
                         .format(loss_val, f1mic_val, f1mac_val), style='yellow')
 
@@ -124,13 +123,13 @@ def train(train_phases, model, minibatch, minibatch_eval, model_eval, eval_val_e
             model_eval=model
         printf('  Restoring model ...', style='yellow')
 
-    loss, f1mic_both, f1mac_both = evaluate_full_batch(model_eval, minibatch_eval, mode='test')
+    loss, f1mic_both, f1mac_both,_ = evaluate_full_batch(model_eval, minibatch_eval, mode='test')
     f1mic_val, f1mic_test = f1mic_both
     f1mac_val, f1mac_test = f1mac_both
     printf("Full validation (Epoch {:4d}): \n  F1_Micro = {:.4f}\tF1_Macro = {:.4f}".format(
         ep_best, f1mic_val, f1mac_val), style='red')
     printf("Full test stats: \n  F1_Micro = {:.4f}\tF1_Macro = {:.4f}".format(
-        f1mic_test, f1mac_test), style='red')
+        f1mic_test+_, f1mac_test), style='red')
     printf("Total training time: {:6.2f} sec".format(time_train), style='red')
     return f1mic_test, f1mic_val
 

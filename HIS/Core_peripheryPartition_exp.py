@@ -40,12 +40,11 @@ if __name__ == '__main__':
     edges = list(zip(row, col))
     d_th = 0
 
-    # You can modify edge_rate to speed up the decomposition process. When there are enough edges in
+    # You can modify edge_num to speed up the decomposition process. When there are enough edges in
     # the original graph. Modifying edge_rate will hardly affect the decomposition effect.
-    # Every ten times decrease in edge_rate will increase the speed by ten times
-    edge_rate = 0.1
+    edge_num = 20000
 
-    edges_sampled = random.sample(edges, int(len(edges) * edge_rate))
+    edges_sampled = random.sample(edges,edge_num) if len(edges)> edge_num else edges
     t0 = time.time()
     print(f"process {filename} ...")
     for u, w in edges_sampled:

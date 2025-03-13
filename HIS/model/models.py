@@ -142,7 +142,7 @@ class HIS(nn.Module):
         return nn.Sigmoid()(preds) if self.sigmoid_loss else F.softmax(preds, dim=1)
 
 
-    def train_step(self, node_subgraph, adj_subgraph, norm_loss_subgraph):
+    def train_step(self, node_subgraph, adj_subgraph, norm_loss_subgraph, _):
         """
         Forward and backward propagation
         """
@@ -155,7 +155,7 @@ class HIS(nn.Module):
         self.optimizer.step()
         return loss, self.predict(preds), labels
 
-    def eval_step(self, node_subgraph, adj_subgraph, norm_loss_subgraph):
+    def eval_step(self, node_subgraph, adj_subgraph, norm_loss_subgraph, _):
         """
         Forward propagation only
         """
@@ -165,4 +165,4 @@ class HIS(nn.Module):
             preds, labels, labels_converted = self(node_subgraph, adj_subgraph)
             loss = self._loss(preds, labels_converted, norm_loss_subgraph)
         self.is_train = False
-        return loss, self.predict(preds), labels
+        return loss, self.predict(preds), labels, _

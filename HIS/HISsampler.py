@@ -34,7 +34,7 @@ class RWSampler:
         edge_count_dict = defaultdict(int)
         row, col = self.adj_train.nonzero()
         edges = list(zip(row, col))
-        edges_sampled = random.sample(edges, int(len(edges) * 0.1))
+        edges_sampled = random.sample(edges,50000) if len(edges)> 50000 else edges
         for u, w in edges_sampled:
             u_degree = self.degrees[u]
             w_degree = self.degrees[w]
@@ -157,7 +157,7 @@ class FFSampler:
         edge_count_dict = defaultdict(int)
         row, col = self.adj_train.nonzero()
         edges = list(zip(row, col))
-        edges_sampled = random.sample(edges, int(len(edges) * 0.1))
+        edges_sampled = random.sample(edges,50000) if len(edges)> 50000 else edges
         for u, w in edges_sampled:
             u_degree = self.degrees[u]
             w_degree = self.degrees[w]
