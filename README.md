@@ -49,7 +49,7 @@ HIS-GCN-master/
 
 ## Datasets
 
-We use six datasets, namely, Citeseer, Pubmed, PPI (large version), Reddit, OGBN-arxiv and OGBN-products, for evaluating HIS-GCN on node classification tasks. The datasets are available in [GraphSAINT](https://github.com/GraphSAINT/GraphSAINT) and [FastGCN](https://github.com/matenure/FastGCN). The datasets we use have the same structure as GraphSAINT.  PPI (large version) has been included as a test case.
+We use six datasets, namely, Citeseer, Pubmed, PPI (large version), Reddit, OGBN-arxiv and OGBN-products, for evaluating HIS-GCN on node classification tasks. The datasets are available in [GraphSAINT](https://github.com/GraphSAINT/GraphSAINT) and [FastGCN](https://github.com/matenure/FastGCN). The datasets we use have the same structure as GraphSAINT.  PPI (large version) has been included as a test case. For FastGCN format data, we provide the `convert_to_HIS.Py` script to implement the conversion
 
 The datasets for other experiments, such as Ollivier-Ricci curvature calculation and core-periphery partition, can be found in [Stanford Large Network Dataset Collection](https://snap.stanford.edu/data/).
 
