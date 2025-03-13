@@ -32,7 +32,7 @@ if __name__ == '__main__':
     
     G_adj = convert_to_undirected(G_adj)
     degrees = np.array(G_adj.sum(1)).flatten()
-    t0 = time.time()
+    
     V_org = np.arange(G_adj.shape[0])
     max_edge_count = 0
     edge_count_dict = defaultdict(int)
@@ -46,6 +46,7 @@ if __name__ == '__main__':
     edge_rate = 0.1
 
     edges_sampled = random.sample(edges, int(len(edges) * edge_rate))
+    t0 = time.time()
     print(f"process {filename} ...")
     for u, w in edges_sampled:
         u_degree = degrees[u]
