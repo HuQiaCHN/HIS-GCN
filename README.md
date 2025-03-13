@@ -2,7 +2,7 @@
 
 Qia Hu<sup>\*</sup>, Bo Jiao<sup>\*</sup>
 
-The source code of Hierarchical graph sampling based minibatch learning with chain preservation and variance reduction
+The source code of [Hierarchical graph sampling based minibatch learning with chain preservation and variance reduction](https://doi.org/10.48550/arXiv.2503.00860)
 
 ## Directory Structure
 
@@ -49,11 +49,13 @@ HIS-GCN-master/
 
 ## Datasets
 
-We use six datasets, namely, Citeseer, Pubmed, PPI (large version), Reddit, OGBN-arxiv and OGBN-products, for evaluating HIS-GCN on node classification tasks. The datasets are available in [GraphSAINT](https://github.com/GraphSAINT/GraphSAINT) and [FastGCN](https://github.com/matenure/FastGCN). The datasets we use has the same structure as GraphSAINT. PPI (large version) have been included as test cases.
+We use six datasets, namely, Citeseer, Pubmed, PPI (large version), Reddit, OGBN-arxiv and OGBN-products, for evaluating HIS-GCN on node classification tasks. The datasets are available in [GraphSAINT](https://github.com/GraphSAINT/GraphSAINT) and [FastGCN](https://github.com/matenure/FastGCN). The datasets we use have the same structure as GraphSAINT.  PPI (large version) has been included as test cases.
 
-The datasets for other experiments, such as Ollivier-Ricci curvature calculation and core-periphery partition, can be found in [Stanford Large Network Dataset Collection](https://snap.stanford.edu/data/)
+The datasets for other experiments, such as Ollivier-Ricci curvature calculation and core-periphery partition, can be found in [Stanford Large Network Dataset Collection](https://snap.stanford.edu/data/).
 
-## Run Training
+All data is the original version, and the code includes modules for converting undirected graphs and removing duplicate edges and loops.
+
+## Training
 
 The hyperparameters needed in training can be set via the configuration file: `./train_config/<name>.yml`. Use the hyperparameters suggested in the paper for training.
 
@@ -82,9 +84,9 @@ Total training time:  50.08 sec
 
 ## Others
 
-In addition, we provide experiments for the Ollivier-Ricci curvature calculation and Core-periphery partition. Input graph data in `./HIS/data` folder can be replaced. The curvature experiment ouputs the average curvature of edges in the input graph and the average curvature of edges of 1,000 subgraphs with 10% partial nodes, and the core-periphery partition experiment outputs the degree threshold and the process time
+In addition, we provide experiments for the Ollivier-Ricci curvature calculation and core-periphery partition. Input graph data in `./HIS/data` folder can be replaced. The curvature experiment ouputs the average curvature of edges in the input graph and the average curvature of edges of 1,000 subgraphs with 10% partial nodes, and the core-periphery partition experiment outputs degree threshold and process time
 
-Curvature experiments:
+Curvature experiment:
 
 ```
 python -m HIS.curvature_exp
@@ -100,7 +102,7 @@ Progress: 100%|█████████████████████�
 subgraph OllivierRicci curvature：0.4061342377303167
 ```
 
-Core-periphery partition experiments:
+Core-periphery partition experiment:
 
 ```
 python -m HIS.Core_peripheryPartition_exp
