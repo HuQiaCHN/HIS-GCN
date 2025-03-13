@@ -49,11 +49,11 @@ HIS-GCN-master/
 
 ## Datasets
 
-We use six datasets, namely, Citeseer, Pubmed, PPI (large version), Reddit, OGBN-arxiv and OGBN-products, for evaluating HIS-GCN on node classification tasks. The datasets are available in [GraphSAINT](https://github.com/GraphSAINT/GraphSAINT) and [FastGCN](https://github.com/matenure/FastGCN). The datasets we use have the same structure as GraphSAINT.  PPI (large version) has been included as test cases.
+We use six datasets, namely, Citeseer, Pubmed, PPI (large version), Reddit, OGBN-arxiv and OGBN-products, for evaluating HIS-GCN on node classification tasks. The datasets are available in [GraphSAINT](https://github.com/GraphSAINT/GraphSAINT) and [FastGCN](https://github.com/matenure/FastGCN). The datasets we use have the same structure as GraphSAINT.  PPI (large version) has been included as a test case.
 
 The datasets for other experiments, such as Ollivier-Ricci curvature calculation and core-periphery partition, can be found in [Stanford Large Network Dataset Collection](https://snap.stanford.edu/data/).
 
-All data is the original version, and the code includes modules for converting undirected graphs and removing duplicate edges and loops.
+All txt files in `./HIS/data` folder correspond to raw data of graphs. The modules for converting the raw data into undirected graphs and removing duplicate edges and self-loops have been included in our code.
 
 ## Training
 
@@ -64,7 +64,7 @@ The hyperparameters needed in training can be set via the configuration file: `.
 python -m HIS.model.train --data_prefix ./datasets/<dataset_name> --train_config <path to train_config yml> --gpu <GPU number>
 ```
 
- `--gpu 0` will run on the first GPU. For OGBN-products, the verification and testing process may cause memory issue for some GPUs. If an out-of-memory error occurs, please use the `--cpu_eval` flag to force the val / test set evaluation to take place on CPU (the minibatch training will still be performed on GPU).
+ `--gpu 0` indicates running on the first GPU. For OGBN-products, the verification and testing process may cause memory issue for some GPUs. If an out-of-memory error occurs, please use `--cpu_eval` to force the val / test set evaluation to run on CPU while the minibatch training is still running on GPU.
 
 Sample output(PPI (large version)):
 
@@ -84,7 +84,7 @@ Total training time:  50.08 sec
 
 ## Others
 
-In addition, we provide experiments for the Ollivier-Ricci curvature calculation and core-periphery partition. Input graph data in `./HIS/data` folder can be replaced. The curvature experiment ouputs the average curvature of edges in the input graph and the average curvature of edges of 1,000 subgraphs with 10% partial nodes, and the core-periphery partition experiment outputs degree threshold and process time
+In addition, we provide two experiments about the Ollivier-Ricci curvature calculation and core-periphery partition. The txt files of graphs in `./HIS/data` folder can be replaced by other graph datasets. The Ollivier-Ricci curvature experiment ouputs the average of edge curvatures on the input graph and the average of edge curvatures of 1,000 subgraphs with 10% partial nodes, and the core-periphery partition experiment outputs degree threshold and process time. Please note that the input graph of the two experiments has been transformed into a simple and undirected graph.
 
 Curvature experiment:
 
@@ -92,7 +92,7 @@ Curvature experiment:
 python -m HIS.curvature_exp
 ```
 
-Please note that the curvature experiment only supports running on Linux
+Please note that the curvature experiment only supports running on Linux.
 
 Output (ego-facebook):
 
@@ -107,6 +107,7 @@ Core-periphery partition experiment:
 ```
 python -m HIS.Core_peripheryPartition_exp
 ```
+
 Output (ppi-large):
 
 ```
