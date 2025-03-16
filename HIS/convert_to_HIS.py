@@ -111,7 +111,6 @@ if __name__ == "__main__":
         json.dump(role, f)
 
     y = np.array(labels)
-    print(y.shape[0])
     if y.shape[1] > 1:
         class_map = {i: y[i].tolist() for i in range(len(y))}
     else:
