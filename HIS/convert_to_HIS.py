@@ -30,7 +30,7 @@ def load_data(dataset_str):
     names = ['x', 'y', 'tx', 'ty', 'allx', 'ally', 'graph']
     objects = []
     for i in range(len(names)):
-        with open("data/ind.{}.{}".format(dataset_str, names[i]), 'rb') as f:
+        with open("ind.{}.{}".format(dataset_str, names[i]), 'rb') as f:
             if sys.version_info > (3, 0):
                 objects.append(pkl.load(f, encoding='latin1'))
             else:
@@ -77,9 +77,9 @@ def load_data(dataset_str):
 
 
 
- # 'cora', 'citeseer', 'pubmed'
+ # 'citeseer', 'pubmed'
 if __name__ == "__main__":
-    data_name = 'pubmed'
+    data_name = 'citeseer'
     adj, features, y_train, y_val, y_test, train_mask, val_mask, test_mask, labels = load_data(data_name)
 
     os.makedirs(data_name, exist_ok=True)
