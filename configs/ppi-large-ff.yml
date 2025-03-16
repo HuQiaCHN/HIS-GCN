@@ -12,10 +12,11 @@ params:
     dropout: 0.1
     weight_decay: 0.000005
     sample_coverage: 50
+
 phase:
   - end: 50
     sampler: 'ff'
     sample_rate: 0.05
-    per_sample_num: 2000
     p: 0.5
-    core_rate: 1
+    core_rate: 1  #gamma
+    per_sample_num: 2000

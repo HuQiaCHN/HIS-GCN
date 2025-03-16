@@ -5,16 +5,18 @@ network:
     arch: '1-1-0'
     act: 'relu'
     bias: 'norm'
+
 params:
   - model: 'sage'
     lr: 0.01
     dropout: 0.1
     weight_decay: 0.000005
     sample_coverage: 200
+
 phase:
   - end: 200
     sampler: 'rw'
     sample_rate: 0.05
     depth: 15
-    core_rate: 1
+    core_rate: 1   #gamma
     per_sample_num: 2000
