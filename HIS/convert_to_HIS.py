@@ -10,6 +10,7 @@ import json
 """
 This file is used to convert the FastGCN format dataset into the dataset format required by our code. 
 Place this file in the ./FastGCN/data directory and execute it directly
+The dataset needs to be specified in "__main__"
 """
 
 def parse_index_file(filename):
