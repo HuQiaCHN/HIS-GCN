@@ -129,7 +129,7 @@ def train(train_phases, model, minibatch, minibatch_eval, model_eval, eval_val_e
     printf("Full validation (Epoch {:4d}): \n  F1_Micro = {:.4f}\tF1_Macro = {:.4f}".format(
         ep_best, f1mic_val, f1mac_val), style='red')
     printf("Full test stats: \n  F1_Micro = {:.4f}\tF1_Macro = {:.4f}".format(
-        f1mic_test+_, f1mac_test), style='red')
+        f1mic_test, f1mac_test), style='red')
     printf("Total training time: {:6.2f} sec".format(time_train), style='red')
     return f1mic_test, f1mic_val
 
